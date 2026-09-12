@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KROMA Barber Co. — Sihanoukville</title>
+<meta name="description" content="KROMA Barber Co. — precision cuts, hot towel shaves, and appointment-only chairs in Sihanoukville." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #1c1b1a;
+    --paper: #f7f7f4;
+    --paper-dim: #efeee9;
+    --stone: #8c8b86;
+    --line: #dcdbd5;
+    --brass: #a9834f;
+    --brass-dark: #7f6038;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3{
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  p{ margin: 0; }
+  a{ color: inherit; text-decoration: none; }
+  img{ display:block; max-width:100%; }
+  ul{ list-style:none; margin:0; padding:0; }
+  button{ font-family: inherit; cursor:pointer; }
+
+  :focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .checker{
+    height: 26px;
+    width: 100%;
+    background-image: repeating-conic-gradient(var(--ink) 0% 25%, transparent 0% 50%);
+    background-size: 26px 26px;
+    opacity: 0.9;
+  }
+  .checker.brass{
+    background-image: repeating-conic-gradient(var(--brass) 0% 25%, transparent 0% 50%);
+    opacity: 0.55;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(247,247,244,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+  .brand{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+  }
+  .brand span{ color: var(--brass); }
+  nav.links{ display:flex; gap: 32px; }
+  nav.links a{
+    font-size: 0.95rem;
+    color: var(--ink);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  nav.links a:hover{ border-color: var(--brass); }
+  .nav-cta{
+    border: 1px solid var(--ink);
+    padding: 9px 18px;
+    font-size: 0.9rem;
+    transition: background .2s ease, color .2s ease;
+  }
+  .nav-cta:hover{ background: var(--ink); color: var(--paper); }
+  .menu-toggle{
+    display:none;
+    background:none;
+    border: 1px solid var(--ink);
+    width: 40px;
+    height: 40px;
+    align-items:center;
+    justify-content:center;
+  }
+  .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after{
+    content:'';
+    display:block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--ink);
+    position: relative;
+  }
+  .menu-toggle span::before{ position:absolute; top:-6px; }
+  .menu-toggle span::after{ position:absolute; top:6px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position: relative;
+    padding: 96px 0 80px;
+    overflow: hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 48px;
+    align-items:end;
+  }
+  .hero h1{
+    font-size: clamp(2.4rem, 5vw, 4.1rem);
+    max-width: 12ch;
+  }
+  .hero-sub{
+    margin-top: 28px;
+    max-width: 42ch;
+    color: #4a4946;
+    font-size: 1.05rem;
+  }
+  .hero-cta-row{
+    margin-top: 40px;
+    display:flex;
+    align-items:center;
+    gap: 24px;
+  }
+  .btn-primary{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 26px;
+    font-size: 0.95rem;
+    display:inline-block;
+    border: 1px solid var(--ink);
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn-primary:hover{ background: transparent; color: var(--ink); }
+  .hero-meta{
+    font-size: 0.85rem;
+    color: var(--stone);
+  }
+  .hero-side{
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+  .hero-side p{
+    color: #4a4946;
+    font-size: 0.98rem;
+  }
+  .hero-side .stat-row{
+    display:flex;
+    gap: 40px;
+    margin-top: 28px;
+  }
+  .stat-num{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size: 1.9rem;
+  }
+  .stat-label{
+    font-size: 0.82rem;
+    color: var(--stone);
+    margin-top: 4px;
+  }
+  .hero.reveal{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .hero.reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- Section base ---------- */
+  section{ padding: 96px 0; }
+  section.bordered-top{ border-top: 1px solid var(--line); }
+  .section-head{
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-end;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .section-head h2{
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    max-width: 16ch;
+  }
+  .section-head .lede{
+    max-width: 34ch;
+    color: var(--stone);
+    font-size: 0.98rem;
+    text-align: right;
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items:center;
+  }
+  .about-copy p{ color:#3f3e3b; margin-bottom: 18px; }
+  .about-copy p:last-child{ margin-bottom:0; }
+  .about-visual{
+    aspect-ratio: 4/5;
+    background: var(--ink);
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    padding: 24px;
+  }
+  .about-visual .checker{ position:absolute; inset:0; opacity:0.12; }
+  .about-visual .caption{
+    position:relative;
+    color: var(--paper);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(247,247,244,0.3);
+    padding-top: 12px;
+    width:100%;
+  }
+
+  /* ---------- Services / price list ---------- */
+  .price-list{ border-top: 1px solid var(--line); }
+  .price-row{
+    display:flex;
+    justify-content: space-between;
+    align-items:baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    gap: 24px;
+  }
+  .price-row .name{ font-size: 1.05rem; }
+  .price-row .desc{ color: var(--stone); font-size: 0.88rem; margin-top:4px; }
+  .price-row .amount{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size: 1.1rem;
+    white-space:nowrap;
+  }
+
+  .barbers{
+    margin-top: 72px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .barber-card{
+    background: var(--paper);
+    padding: 32px 28px;
+  }
+  .avatar{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    margin-bottom: 20px;
+  }
+  .barber-card h3{ font-size: 1.1rem; margin-bottom: 6px; }
+  .barber-card .role{ color: var(--brass-dark); font-size: 0.85rem; margin-bottom: 14px; }
+  .barber-card p.bio{ color:#4a4946; font-size: 0.92rem; }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  .pair{ }
+  .pair-images{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .pair-images img{
+    width:100%;
+    height: 200px;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter .3s ease;
+  }
+  .pair-images img:hover{ filter: grayscale(0.15) sepia(0.15) saturate(1.1); }
+  .pair-caps{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 10px;
+  }
+  .pair-caps span{ font-size: 0.78rem; color: var(--stone); }
+  .pair-caps span:last-child{ text-align:right; }
+  .pair-title{
+    margin-top: 14px;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- Booking ---------- */
+  .booking-grid{
+    display:grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 64px;
+  }
+  .booking-info h3{ font-size:1.3rem; margin-bottom: 16px; }
+  .booking-info p{ color:#4a4946; margin-bottom: 24px; }
+  .info-line{
+    display:flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.92rem;
+  }
+  .info-line:last-child{ border-bottom: 1px solid var(--line); }
+  .info-line .k{ color: var(--stone); }
+
+  form.booking-form{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  form.booking-form .full{ grid-column: 1 / -1; }
+  .field label{
+    display:block;
+    font-size: 0.82rem;
+    color: var(--stone);
+    margin-bottom: 8px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    padding: 10px 2px;
+    font-family: inherit;
+    font-size: 0.98rem;
+    color: var(--ink);
+    transition: border-color .2s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color: var(--ink);
+    outline: none;
+  }
+  .field textarea{ resize: vertical; min-height: 70px; }
+  .hidden-field{ position:absolute; left:-9999px; }
+  .submit-row{
+    margin-top: 8px;
+    display:flex;
+    align-items:center;
+    gap: 20px;
+  }
+  .form-note{ font-size: 0.8rem; color: var(--stone); }
+
+  /* ---------- Visit / map ---------- */
+  .visit-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  .visit-copy{
+    padding: 48px;
+  }
+  .visit-copy .info-line{ font-size: 0.95rem; }
+  .map-frame{ min-height: 380px; }
+  .map-frame iframe{ width:100%; height:100%; border:0; filter: grayscale(0.35) contrast(1.05); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding: 56px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-row{
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-brand{ font-family:'Space Grotesk', sans-serif; font-weight:700; }
+  .footer-social{ display:flex; gap: 20px; font-size: 0.85rem; }
+  .footer-social a{ border-bottom: 1px solid transparent; }
+  .footer-social a:hover{ border-color: var(--brass); }
+  .footer-bottom{
+    margin-top: 40px;
+    display:flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--stone);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ---------- WhatsApp float ---------- */
+  .wa-float{
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 60;
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 18px 12px 14px;
+    border: 1px solid var(--ink);
+    transform: translateY(20px) scale(0.9);
+    opacity: 0;
+    transition: transform .5s ease, opacity .5s ease, background .2s ease;
+  }
+  .wa-float.in{ transform:none; opacity:1; }
+  .wa-float:hover{ background: var(--brass-dark); border-color: var(--brass-dark); }
+  .wa-float svg{ width:20px; height:20px; flex-shrink:0; }
+  .wa-float span{ font-size: 0.85rem; white-space:nowrap; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+    .hero.reveal, .wa-float{ opacity:1; transform:none; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    nav.links, .nav-cta{ display:none; }
+    .menu-toggle{ display:flex; }
+    .hero-grid, .about-grid, .booking-grid, .visit-grid{ grid-template-columns: 1fr; }
+    .hero-side{ border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:24px; margin-top: 24px; }
+    .barbers{ grid-template-columns: 1fr; }
+    .gallery-grid{ grid-template-columns: 1fr; }
+    form.booking-form{ grid-template-columns: 1fr; }
+    .section-head{ flex-direction:column; align-items:flex-start; }
+    .section-head .lede{ text-align:left; }
+    .wrap{ padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap nav-row">
+    <div class="brand">KROMA <span>BARBER CO.</span></div>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#gallery">Work</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a href="#book" class="nav-cta">Book a chair</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span></button>
+  </div>
+</header>
+
+<section class="hero reveal" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Every fade starts with a straight line.</h1>
+      <p class="hero-sub">KROMA is an appointment-only barbershop in Sihanoukville. Three chairs, no queue, and a finish that's built to hold.</p>
+      <div class="hero-cta-row">
+        <a href="#book" class="btn-primary">Book a chair</a>
+        <span class="hero-meta">Open Tue–Sun · Ochheuteal Beach Road</span>
+      </div>
+    </div>
+    <div class="hero-side">
+      <p>Placeholder demo site for a barbershop concept — built to show what a modern, appointment-based shop could look like online.</p>
+      <div class="stat-row">
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">chairs, always booked ahead</div>
+        </div>
+        <div>
+          <div class="stat-num">6+</div>
+          <div class="stat-label">years, average barber experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="checker"></div>
+
+<section id="about" class="bordered-top">
+  <div class="wrap about-grid">
+    <div class="about-visual">
+      <div class="checker" style="height:100%;"></div>
+      <div class="caption">Consultation → wash → cut → finish. One session, no shortcuts.</div>
+    </div>
+    <div class="about-copy">
+      <h2 style="margin-bottom:20px; font-size:clamp(1.6rem,3vw,2.1rem);">Built around the chair, not the counter.</h2>
+      <p>KROMA opened with one rule: no rushed cuts. Every booking gets a full session — consultation, wash, cut, and a finish that actually holds past day three.</p>
+      <p>We run three chairs, not ten, so the standard never drops to fill more seats. If a barber's booked, you wait for them — not for whoever's free.</p>
+      <p>This page is a concept build showing the shop's tone: quiet, precise, and a little proud of the craft.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Services &amp; pricing</h2>
+      <p class="lede">Every cut includes a consultation and finish. Prices in USD, cash or card.</p>
+    </div>
+
+    <div class="price-list">
+      <div class="price-row">
+        <div><div class="name">Classic cut</div><div class="desc">Scissor or clipper, styled to finish</div></div>
+        <div class="amount">$8</div>
+      </div>
+      <div class="price-row">
+        <div><div class="name">Skin fade</div><div class="desc">Zero to blend, sharp line-up</div></div>
+        <div class="amount">$10</div>
+      </div>
+      <div class="price-row">
+        <div><div class="name">Beard trim</div><div class="desc">Shape, line-up, hot towel finish</div></div>
+        <div class="amount">$5</div>
+      </div>
+      <div class="price-row">
+        <div><div class="name">Hot towel shave</div><div class="desc">Straight razor, pre and post-shave care</div></div>
+        <div class="amount">$7</div>
+      </div>
+      <div class="price-row">
+        <div><div class="name">Cut + beard combo</div><div class="desc">Full session, both chairs' specialties</div></div>
+        <div class="amount">$12</div>
+      </div>
+      <div class="price-row">
+        <div><div class="name">Kids cut</div><div class="desc">12 and under</div></div>
+        <div class="amount">$6</div>
+      </div>
+    </div>
+
+    <div class="barbers">
+      <div class="barber-card">
+        <div class="avatar">SD</div>
+        <h3>Sok Dara</h3>
+        <div class="role">Fades &amp; modern cuts · 6 years</div>
+        <p class="bio">Trained in Phnom Penh, known for tight fades and precise line-ups. Books out fastest on weekends.</p>
+      </div>
+      <div class="barber-card">
+        <div class="avatar">CR</div>
+        <h3>Chan Ratha</h3>
+        <div class="role">Classic cuts &amp; straight razor · 9 years</div>
+        <p class="bio">The shop's longest-serving barber. Go to him for a traditional cut and an unhurried hot towel shave.</p>
+      </div>
+      <div class="barber-card">
+        <div class="avatar">VB</div>
+        <h3>Vireak Bunthoeun</h3>
+        <div class="role">Beard sculpting &amp; kids cuts · 4 years</div>
+        <p class="bio">Patient with first-time kids' cuts, precise with beard shaping. Speaks Khmer, English, and basic French.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="checker brass"></div>
+
+<section id="gallery" class="bordered-top">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Recent work</h2>
+      <p class="lede">A few before-and-afters from the chair. Placeholder photos — swap in real client work.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="pair">
+        <div class="pair-images">
+          <img src="https://picsum.photos/seed/kroma-b1/400/500" alt="Before: overgrown fade" loading="lazy">
+          <img src="https://picsum.photos/seed/kroma-a1/400/500" alt="After: sharp skin fade" loading="lazy">
+        </div>
+        <div class="pair-caps"><span>Before</span><span>After</span></div>
+        <div class="pair-title">Skin fade + line-up</div>
+      </div>
+      <div class="pair">
+        <div class="pair-images">
+          <img src="https://picsum.photos/seed/kroma-b2/400/500" alt="Before: untrimmed beard" loading="lazy">
+          <img src="https://picsum.photos/seed/kroma-a2/400/500" alt="After: sculpted beard" loading="lazy">
+        </div>
+        <div class="pair-caps"><span>Before</span><span>After</span></div>
+        <div class="pair-title">Beard sculpt</div>
+      </div>
+      <div class="pair">
+        <div class="pair-images">
+          <img src="https://picsum.photos/seed/kroma-b3/400/500" alt="Before: long classic cut" loading="lazy">
+          <img src="https://picsum.photos/seed/kroma-a3/400/500" alt="After: classic scissor cut" loading="lazy">
+        </div>
+        <div class="pair-caps"><span>Before</span><span>After</span></div>
+        <div class="pair-title">Classic scissor cut</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="bordered-top">
+  <div class="wrap booking-grid">
+    <div class="booking-info">
+      <h3>Request an appointment</h3>
+      <p>Walk-ins are welcome when a chair's free, but booking ahead guarantees your barber and your time slot. We'll confirm by WhatsApp within a few hours.</p>
+      <div class="info-line"><span class="k">Hours</span><span>Tue–Sat 9:00–19:00, Sun 10:00–17:00</span></div>
+      <div class="info-line"><span class="k">Closed</span><span>Mondays</span></div>
+      <div class="info-line"><span class="k">Walk-ins</span><span>Subject to chair availability</span></div>
+    </div>
+
+    <form class="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="booking" />
+      <p class="hidden-field">
+        <label>Leave this field blank: <input name="bot-field" /></label>
+      </p>
+
+      <div class="field">
+        <label for="fname">Full name</label>
+        <input id="fname" name="name" type="text" required>
+      </div>
+      <div class="field">
+        <label for="phone">Phone / WhatsApp</label>
+        <input id="phone" name="phone" type="tel" required>
+      </div>
+      <div class="field">
+        <label for="service">Service</label>
+        <select id="service" name="service">
+          <option>Classic cut — $8</option>
+          <option>Skin fade — $10</option>
+          <option>Beard trim — $5</option>
+          <option>Hot towel shave — $7</option>
+          <option>Cut + beard combo — $12</option>
+          <option>Kids cut — $6</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="barber">Preferred barber</label>
+        <select id="barber" name="barber">
+          <option>No preference</option>
+          <option>Sok Dara</option>
+          <option>Chan Ratha</option>
+          <option>Vireak Bunthoeun</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="date">Preferred date</label>
+        <input id="date" name="date" type="date">
+      </div>
+      <div class="field">
+        <label for="time">Preferred time</label>
+        <input id="time" name="time" type="time">
+      </div>
+      <div class="field full">
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" name="notes" placeholder="Anything your barber should know"></textarea>
+      </div>
+
+      <div class="full submit-row">
+        <button type="submit" class="btn-primary">Request appointment</button>
+        <span class="form-note">We'll confirm by WhatsApp — this isn't an instant booking.</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="visit" class="bordered-top">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Find the shop</h2>
+      <p class="lede">Replace with your real address once the location's confirmed.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="visit-copy">
+        <div class="info-line"><span class="k">Address</span><span>Ochheuteal Beach Road, Sihanoukville, Cambodia</span></div>
+        <div class="info-line"><span class="k">Phone</span><span>+855 12 345 678</span></div>
+        <div class="info-line"><span class="k">WhatsApp</span><span>+855 12 345 678</span></div>
+        <div class="info-line"><span class="k">Email</span><span>hello@kromabarber.demo</span></div>
+        <div class="info-line"><span class="k">Hours</span><span>Tue–Sat 9–19, Sun 10–17</span></div>
+      </div>
+      <div class="map-frame">
+        <iframe
+          src="https://www.google.com/maps?q=Sihanoukville,Cambodia&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Map location — Sihanoukville, Cambodia">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="footer-brand">KROMA BARBER CO.</div>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> KROMA Barber Co. — concept demo, Sihanoukville.</span>
+      <span>Placeholder content — replace copy, photos, and contact details before launch.</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" id="waFloat" href="https://wa.me/85512345678" target="_blank" rel="noopener">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.36 4 15c0 2.36.66 4.56 1.8 6.44L4 29l7.76-1.74A11.9 11.9 0 0 0 16.02 27C22.64 27 28 21.64 28 15S22.64 3 16.02 3zm0 21.6c-1.94 0-3.75-.55-5.28-1.5l-.38-.22-4.6 1.03 1.05-4.48-.25-.4A9.55 9.55 0 0 1 5.4 15c0-5.86 4.77-10.6 10.62-10.6S26.64 9.14 26.64 15 21.88 24.6 16.02 24.6zm5.53-7.86c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.07-.3-.15-1.28-.47-2.44-1.5-.9-.8-1.5-1.79-1.68-2.09-.18-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.68-1.63-.93-2.24-.24-.58-.49-.5-.68-.51h-.58c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35z"/></svg>
+  <span>WhatsApp</span>
+</a>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Hero reveal, once
+  requestAnimationFrame(() => {
+    document.querySelector('.hero').classList.add('in');
+  });
+
+  // WhatsApp button entrance, once, slightly delayed
+  setTimeout(() => {
+    document.getElementById('waFloat').classList.add('in');
+  }, 500);
+
+  // Simple mobile menu toggle -> jumps to nav links stacked (kept minimal for demo)
+  const toggle = document.querySelector('.menu-toggle');
+  const linksNav = document.querySelector('nav.links');
+  toggle.addEventListener('click', () => {
+    const open = linksNav.style.display === 'flex';
+    linksNav.style.cssText = open ? '' : 'display:flex; position:absolute; top:100%; left:0; right:0; background:var(--paper); flex-direction:column; padding:20px 32px; border-bottom:1px solid var(--line);';
+  });
+</script>
+
+</body>
+</html>
