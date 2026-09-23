@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KROMA Barber Co. — 3 Design Directions</title>
+<meta name="description" content="Three homepage directions for KROMA Barber Co., a booking-first barbershop concept in Sihanoukville." />
+<meta name="theme-color" content="#ffffff" />
+<meta name="color-scheme" content="light" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black: #000000;
+    --white: #ffffff;
+    --surface: #f3f3f3;
+    --line: #d4d4d4;
+    --muted: #5c5c5c;
+
+    --blue: #002fa7;
+    --yellow: #ffe600;
+
+    --narrow: 68%;
+    --gutter: clamp(20px, 4vw, 48px);
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Archivo', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2{
+    margin: 0;
+    font-stretch: var(--narrow);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p{ margin: 0; text-wrap: pretty; }
+  ul{ list-style: none; margin: 0; padding: 0; }
+  a{ color: inherit; }
+
+  :focus-visible{
+    outline: 2px solid var(--black);
+    outline-offset: 4px;
+  }
+
+  .wrap{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ---------- Intro ---------- */
+  header{ padding: clamp(56px, 9vw, 120px) 0 clamp(40px, 6vw, 72px); }
+  .brand{
+    font-stretch: var(--narrow);
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+  .brand small{ font-weight: 500; font-size: 1rem; color: var(--muted); margin-left: 6px; }
+  h1{
+    font-size: clamp(3.2rem, 9vw, 7.5rem);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+  }
+  .intro{
+    margin-top: 28px;
+    max-width: 52ch;
+    font-size: 1.1rem;
+    color: var(--muted);
+  }
+
+  /* ---------- Cards ---------- */
+  .directions{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(72px, 10vw, 128px);
+  }
+  .card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid var(--black);
+    padding-top: 20px;
+  }
+  .card h2{ font-size: clamp(2rem, 3.2vw, 2.6rem); }
+  .card h2 a{ text-decoration: none; }
+  /* The whole card is the link target */
+  .card h2 a::after{ content: ''; position: absolute; inset: 0; }
+  .card .file{
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .card .desc{ margin-top: 16px; color: var(--muted); }
+  .card .traits{
+    margin-top: 16px;
+    font-size: 0.95rem;
+  }
+  .card .traits li{ padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .card .traits li:first-child{ border-top: 1px solid var(--line); }
+  .card .open{
+    margin-top: auto;
+    padding-top: 24px;
+    font-weight: 600;
+  }
+  .card .open span{
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 22px;
+    border: 1.5px solid var(--black);
+    border-radius: 999px;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .card:hover .open span, .card:focus-within .open span{ background: var(--black); color: var(--white); }
+  .card:focus-within{ outline: 2px solid var(--black); outline-offset: 8px; }
+  .card h2 a:focus-visible{ outline: none; }
+
+  /* ---------- Previews: each card's own hero fade, drawn in CSS ---------- */
+  .preview{
+    order: -1;
+    aspect-ratio: 4 / 3;
+    margin: -20px 0 20px;
+    padding: 20px;
+    display: grid;
+    align-content: center;
+    gap: 5px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .preview i{ display: block; height: 14%; min-height: 14px; }
+
+  .preview.mono{ background: var(--surface); }
+  .preview.mono i:nth-child(1){ background: #000000; }
+  .preview.mono i:nth-child(2){ background: #262626; }
+  .preview.mono i:nth-child(3){ background: #4d4d4d; }
+  .preview.mono i:nth-child(4){ background: #7a7a7a; }
+  .preview.mono i:nth-child(5){ background: #ababab; }
+  .preview.mono i:nth-child(6){ background: #e3e3e3; }
+
+  .preview.color, .preview.motion{ background: var(--blue); border-radius: 0; }
+  .preview.color i, .preview.motion i{ background: var(--yellow); }
+  .preview i:nth-child(1){ width: 100%; }
+  .preview i:nth-child(2){ width: 75%; }
+  .preview i:nth-child(3){ width: 50%; }
+  .preview i:nth-child(4){ width: 25%; }
+  .preview i:nth-child(5){ width: 12.5%; }
+  .preview i:nth-child(6){ width: 3px; }
+  .preview.mono i{ width: 100%; }
+
+  /* Motion card: the bars push out again on hover */
+  .preview.motion i{ transform-origin: left center; transition: transform .9s cubic-bezier(.16, 1, .3, 1); }
+  .preview.motion i:nth-child(2){ transition-delay: .06s; }
+  .preview.motion i:nth-child(3){ transition-delay: .12s; }
+  .preview.motion i:nth-child(4){ transition-delay: .18s; }
+  .preview.motion i:nth-child(5){ transition-delay: .24s; }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference){
+    .card:hover .preview.motion i{ transform: scaleX(0.04); transition-duration: .35s; transition-delay: 0s; }
+  }
+
+  footer{
+    padding: 32px 0 40px;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ transition: none !important; }
+  }
+  @media (max-width: 900px){
+    .directions{ grid-template-columns: 1fr; }
+    .preview{ aspect-ratio: 16 / 7; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="brand">KROMA<small>Barber Co.</small></p>
+    <h1>KROMA Barber Co. — 3 Design Directions</h1>
+    <p class="intro">Three takes on the homepage for a booking-first barbershop in Sihanoukville. They share the same content, booking form and accessibility fixes. Only the look and the motion change.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <ul class="directions">
+    <li class="card">
+      <h2><a href="kroma-barber-demo.html">Monochrome</a></h2>
+      <p class="file">kroma-barber-demo.html</p>
+      <div class="preview mono" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="desc">Black, white and grey only. The hero shows a skin fade as six grey bands, one for each clipper guard.</p>
+      <ul class="traits">
+        <li>Archivo, set narrow for headings</li>
+        <li>Inverted black booking section</li>
+        <li>One load animation, nothing else moves</li>
+      </ul>
+      <p class="open"><span>Open monochrome</span></p>
+    </li>
+
+    <li class="card">
+      <h2><a href="kroma-barber-color.html">Colour blocking</a></h2>
+      <p class="file">kroma-barber-color.html</p>
+      <div class="preview color" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="desc">Klein blue for the big blocks, lemon yellow for buttons and accents. Fade bars are drawn to scale, 12 mm down to skin.</p>
+      <ul class="traits">
+        <li>Blue #002FA7, yellow #FFE600</li>
+        <li>Yellow only sits on blue or near-black</li>
+        <li>No gradients</li>
+      </ul>
+      <p class="open"><span>Open colour blocking</span></p>
+    </li>
+
+    <li class="card">
+      <h2><a href="kroma-barber-motion.html">Motion</a></h2>
+      <p class="file">kroma-barber-motion.html</p>
+      <div class="preview motion" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="desc">The colour-blocked page with slow, weighted motion: a curtain opening, headings revealed line by line, and a pinned process section.</p>
+      <ul class="traits">
+        <li>CSS and IntersectionObserver, no library</li>
+        <li>Lighter parallax, no pinning on phones</li>
+        <li>Static for reduced-motion settings</li>
+      </ul>
+      <p class="open"><span>Open motion</span></p>
+    </li>
+  </ul>
+</main>
+
+<footer>
+  <div class="wrap">Concept demo. Photos, address and contact details are placeholders.</div>
+</footer>
+
+</body>
+</html>
