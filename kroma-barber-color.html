@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>KROMA Barber Co. | Sihanoukville</title>
+<meta name="description" content="KROMA Barber Co. Booking-first barbershop in Sihanoukville: fades, classic cuts, beard work and hot towel shaves." />
+<meta name="theme-color" content="#002fa7" />
+<meta name="color-scheme" content="light" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  /*
+    Colour roles
+    Klein blue = large blocks (header, hero, booking, blocks inside white sections)
+    Lemon yellow = accent only: buttons, fade bars, errors. Only ever on blue or ink.
+    Never white text on yellow, never yellow text on white.
+  */
+  :root{
+    --blue: #002fa7;
+    --yellow: #ffe600;
+    --white: #ffffff;
+    --ink: #141414;
+
+    --muted: #4d4d4d;            /* on white, 8.4:1 */
+    --muted-on-blue: #c7d2f0;    /* on blue, 7.5:1 */
+    --muted-on-ink: #a8a8a8;     /* on ink, 7.9:1 */
+    --line: #d6d6d6;
+    --line-on-blue: rgba(255,255,255,0.28);
+
+    --narrow: 68%;
+    --gutter: clamp(20px, 4vw, 48px);
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body{
+    margin: 0;
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Archivo', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,h2,h3{
+    margin: 0;
+    font-stretch: var(--narrow);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p{ margin: 0; text-wrap: pretty; }
+  a{ color: inherit; }
+  img{ display: block; max-width: 100%; }
+  ol,ul{ list-style: none; margin: 0; padding: 0; }
+  figure{ margin: 0; }
+  button,input,select,textarea{ font: inherit; color: inherit; }
+
+  :focus-visible{
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+  .on-blue :focus-visible, .on-ink :focus-visible{ outline-color: var(--yellow); }
+
+  .wrap{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ---------- Colour blocks ---------- */
+  .on-blue{ background: var(--blue); color: var(--white); }
+  .on-ink{ background: var(--ink); color: var(--white); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 26px;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  }
+  /* Primary: yellow on blue or ink */
+  .btn-yellow{ background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+  .btn-yellow:hover{ background: var(--white); border-color: var(--white); }
+  /* Secondary: outline on blue */
+  .btn-outline{ background: transparent; color: var(--white); border-color: var(--white); }
+  .btn-outline:hover{ background: var(--white); color: var(--blue); }
+  .btn[disabled]{ opacity: .65; cursor: progress; }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--line-on-blue);
+  }
+  .nav-row{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    height: 68px;
+  }
+  .brand{
+    font-stretch: var(--narrow);
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    line-height: 1;
+  }
+  .brand small{ font-weight: 500; font-size: 1rem; color: var(--muted-on-blue); margin-left: 6px; }
+  .nav-links{ display: flex; gap: 28px; margin-left: auto; }
+  .nav-links a{
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 6px 0;
+    background: linear-gradient(var(--yellow), var(--yellow)) left bottom / 0 2px no-repeat;
+    transition: background-size .2s ease;
+  }
+  .nav-links a:hover{ background-size: 100% 2px; }
+  .nav-row .btn{ min-height: 40px; padding: 0 20px; }
+  .menu-toggle{
+    display: none;
+    margin-left: auto;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--white);
+    border-radius: 999px;
+    background: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu-toggle .bars, .menu-toggle .bars::before{
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--white);
+    position: relative;
+    transition: transform .2s ease;
+  }
+  .menu-toggle .bars::before{ content: ''; position: absolute; top: 5px; }
+  .menu-toggle .bars{ transform: translateY(-2.5px); }
+  .menu-toggle[aria-expanded="true"] .bars{ transform: rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .bars::before{ transform: translateY(-5px) rotate(-90deg); }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 8vw, 112px); }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(32px, 6vw, 88px);
+    align-items: end;
+  }
+  .hero h1{
+    font-size: clamp(3.6rem, 10vw, 8.5rem);
+    font-weight: 900;
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+  }
+  .hero-sub{
+    margin-top: 32px;
+    max-width: 40ch;
+    font-size: 1.15rem;
+    color: var(--muted-on-blue);
+  }
+  .hero-actions{
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* The fade: bar length = guard length in mm */
+  .fade figcaption{
+    font-size: 0.9rem;
+    color: var(--muted-on-blue);
+    margin-bottom: 14px;
+  }
+  .fade ol{ display: grid; gap: 6px; }
+  .fade li{
+    display: grid;
+    grid-template-columns: 4.5rem 1fr 3.5rem;
+    align-items: center;
+    column-gap: 16px;
+    height: clamp(40px, 5.2vw, 58px);
+  }
+  .fade .track{ height: 100%; display: flex; }
+  .fade .bar{
+    width: calc(var(--mm) / 12 * 100%);
+    min-width: 4px;
+    height: 100%;
+    background: var(--yellow);
+    transform-origin: left center;
+    animation: pass .6s cubic-bezier(.2,.7,.2,1) backwards;
+  }
+  .fade li:nth-child(1) .bar{ animation-delay: .10s; }
+  .fade li:nth-child(2) .bar{ animation-delay: .18s; }
+  .fade li:nth-child(3) .bar{ animation-delay: .26s; }
+  .fade li:nth-child(4) .bar{ animation-delay: .34s; }
+  .fade li:nth-child(5) .bar{ animation-delay: .42s; }
+  .fade li:nth-child(6) .bar{ animation-delay: .50s; }
+  .fade .guard{
+    font-stretch: var(--narrow);
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+  .fade .mm{
+    font-size: 0.9rem;
+    color: var(--muted-on-blue);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  @keyframes pass{ from{ transform: scaleX(0); } }
+
+  /* ---------- Sections ---------- */
+  .section{ padding: clamp(72px, 10vw, 128px) 0; }
+  .section.rule{ border-top: 1px solid var(--line); }
+  .section-head{
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(24px, 6vw, 88px);
+    align-items: end;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  .section-head h2{ font-size: clamp(2.6rem, 6vw, 4.5rem); }
+  .section-head p{ color: var(--muted); max-width: 38ch; }
+  .on-blue .section-head p{ color: var(--muted-on-blue); }
+  .on-ink .section-head p{ color: var(--muted-on-ink); }
+
+  /* ---------- Process ---------- */
+  .steps{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    border-top: 6px solid var(--blue);
+  }
+  .steps li{
+    padding: 24px 24px 0 0;
+    counter-increment: step;
+  }
+  .steps li + li{ padding-left: 24px; border-left: 1px solid var(--line); }
+  .steps li::before{
+    content: counter(step);
+    display: block;
+    font-stretch: var(--narrow);
+    font-weight: 900;
+    font-size: 3.4rem;
+    line-height: 1;
+    color: var(--blue);
+    margin-bottom: 20px;
+  }
+  .steps h3{ font-size: 1.6rem; margin-bottom: 10px; }
+  .steps p{ color: var(--muted); font-size: 0.98rem; }
+
+  /* ---------- Services ---------- */
+  .services-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(40px, 6vw, 88px);
+  }
+  .price-list li{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .price-list li:first-child{ border-top: 6px solid var(--blue); }
+  .price-list .name{ font-weight: 600; font-size: 1.1rem; }
+  .price-list .desc{ grid-column: 1; color: var(--muted); font-size: 0.95rem; }
+  .price-list .amount{
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    align-self: center;
+    font-stretch: var(--narrow);
+    font-weight: 900;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--blue);
+    font-variant-numeric: tabular-nums;
+  }
+  .services-aside{
+    padding: clamp(28px, 4vw, 44px);
+    align-self: start;
+  }
+  .services-aside h3{ font-size: 2rem; margin-bottom: 14px; }
+  .services-aside p{ color: var(--muted-on-blue); margin-bottom: 28px; }
+
+  /* ---------- Barbers ---------- */
+  .barbers{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 40px);
+  }
+  .barber .initials{
+    display: flex;
+    align-items: flex-end;
+    aspect-ratio: 16 / 9;
+    padding: 16px 20px;
+    font-stretch: var(--narrow);
+    font-weight: 900;
+    font-size: clamp(3.5rem, 6vw, 5rem);
+    line-height: 0.8;
+    margin-bottom: 24px;
+  }
+  .barber h3{ font-size: 1.9rem; }
+  .barber .role{ margin-top: 8px; font-weight: 600; font-size: 0.95rem; color: var(--blue); }
+  .barber p:last-child{ margin-top: 12px; color: var(--muted); font-size: 0.98rem; }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 40px);
+  }
+  .pair-images{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .pair-images figure{ position: relative; }
+  .pair-images img{
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    object-fit: cover;
+    background: #2a2a2a;
+  }
+  .pair-images figcaption{
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    background: var(--yellow);
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+  .pair h3{
+    margin-top: 16px;
+    font-size: 1.4rem;
+  }
+
+  /* ---------- Booking ---------- */
+  .booking-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 6vw, 88px);
+  }
+  .hours{ border-top: 6px solid var(--yellow); }
+  .hours div{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-on-blue);
+  }
+  .hours dt{ color: var(--muted-on-blue); }
+  .hours dd{ margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .booking-note{ margin-top: 24px; font-size: 0.95rem; color: var(--muted-on-blue); }
+
+  .booking-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .booking-form .full{ grid-column: 1 / -1; }
+  .field label{
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .field input, .field select, .field textarea{
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 14px;
+    background: var(--white);
+    color: var(--ink);
+    border: 2px solid var(--white);
+    border-radius: 4px;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color: #6b6b6b; }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible{
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+  .field textarea{ resize: vertical; min-height: 96px; }
+  .field .error{
+    margin-top: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  .field .error:empty{ display: none; }
+  .field [aria-invalid="true"]{ border-color: var(--yellow); box-shadow: inset 0 0 0 1px var(--yellow); }
+  .honeypot{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .submit-row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+    margin-top: 8px;
+  }
+  .submit-row p{ font-size: 0.9rem; color: var(--muted-on-blue); }
+
+  /* ---------- Visit ---------- */
+  .visit-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: stretch;
+  }
+  .contact{ border-top: 6px solid var(--blue); }
+  .contact div{
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact dt{ color: var(--muted); }
+  .contact dd{ margin: 0; overflow-wrap: anywhere; }
+  .contact a{ color: var(--blue); font-weight: 600; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .contact a:hover{ text-decoration-thickness: 2px; }
+  .map{
+    min-height: 400px;
+    background: var(--blue);
+    padding: 12px;
+  }
+  .map iframe{ display: block; width: 100%; height: 100%; min-height: 376px; border: 0; }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    padding: 40px 0 calc(40px + env(safe-area-inset-bottom));
+    font-size: 0.9rem;
+    color: var(--muted-on-ink);
+  }
+  .footer-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+  }
+  .footer-row .brand{ color: var(--yellow); font-size: 1.25rem; }
+
+  /* ---------- WhatsApp ---------- */
+  .wa{
+    position: fixed;
+    right: calc(20px + env(safe-area-inset-right));
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 20px 0 16px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--ink);
+    box-shadow: 0 0 0 2px var(--ink);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    touch-action: manipulation;
+  }
+  .wa:hover{ background: var(--white); }
+  .wa svg{ width: 20px; height: 20px; flex-shrink: 0; }
+  .wa:focus-visible{ outline: 3px solid var(--blue); outline-offset: 4px; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *,*::before,*::after{ animation: none !important; transition: none !important; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .nav-links, .nav-row > .btn{ display: none; }
+    .menu-toggle{ display: inline-flex; }
+    .site-header.open .nav-links{
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: 0;
+      padding: 8px var(--gutter) 24px;
+      background: var(--blue);
+      border-bottom: 6px solid var(--yellow);
+    }
+    .site-header.open .nav-links a{
+      font-stretch: var(--narrow);
+      font-weight: 800;
+      font-size: 2rem;
+      padding: 10px 0;
+      background: none;
+    }
+    .nav-links .mobile-only{ display: block; }
+
+    .hero-grid, .section-head, .services-grid, .booking-grid, .visit-grid{ grid-template-columns: 1fr; }
+    .steps{ grid-template-columns: 1fr 1fr; }
+    .steps li:nth-child(3){ padding-left: 0; border-left: 0; }
+    .steps li:nth-child(n+3){ margin-top: 32px; }
+    .barbers, .gallery{ grid-template-columns: 1fr; }
+    .barber .initials{ aspect-ratio: auto; height: 120px; }
+  }
+  @media (min-width: 901px){
+    .nav-links .mobile-only{ display: none; }
+  }
+  @media (max-width: 560px){
+    body{ font-size: 16px; }
+    .steps{ grid-template-columns: 1fr; }
+    .steps li, .steps li + li{ padding: 20px 0 0; border-left: 0; }
+    .steps li + li{ margin-top: 20px; border-top: 1px solid var(--line); }
+    .steps li:nth-child(n+3){ margin-top: 20px; }
+    .booking-form{ grid-template-columns: 1fr; }
+    .wa span{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .wa{ padding: 0; width: 52px; min-height: 52px; justify-content: center; }
+    .contact div{ grid-template-columns: 5.5rem minmax(0, 1fr); }
+    .map{ padding: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header on-blue" id="siteHeader">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top">KROMA<small>Barber Co.</small></a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="#process">How it works</a>
+      <a href="#services">Prices</a>
+      <a href="#barbers">Barbers</a>
+      <a href="#work">Work</a>
+      <a href="#visit">Visit</a>
+      <a href="#book" class="mobile-only">Book a chair</a>
+    </nav>
+    <a href="#book" class="btn btn-yellow">Book a chair</a>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span class="bars"></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero on-blue">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Every fade starts with a straight line.</h1>
+      <p class="hero-sub">A booking-first barbershop on Ochheuteal Beach Road, Sihanoukville. Three chairs, a set time, and a cut that still looks right in week three.</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn btn-yellow">Book a chair</a>
+        <a href="#services" class="btn btn-outline">See prices</a>
+      </div>
+    </div>
+
+    <figure class="fade">
+      <figcaption>A skin fade, guard by guard</figcaption>
+      <ol>
+        <li><span class="guard">No. 4</span><span class="track" aria-hidden="true"><span class="bar" style="--mm:12"></span></span><span class="mm">12 mm</span></li>
+        <li><span class="guard">No. 3</span><span class="track" aria-hidden="true"><span class="bar" style="--mm:9"></span></span><span class="mm">9 mm</span></li>
+        <li><span class="guard">No. 2</span><span class="track" aria-hidden="true"><span class="bar" style="--mm:6"></span></span><span class="mm">6 mm</span></li>
+        <li><span class="guard">No. 1</span><span class="track" aria-hidden="true"><span class="bar" style="--mm:3"></span></span><span class="mm">3 mm</span></li>
+        <li><span class="guard">No. 0.5</span><span class="track" aria-hidden="true"><span class="bar" style="--mm:1.5"></span></span><span class="mm">1.5 mm</span></li>
+        <li><span class="guard">Skin</span><span class="track" aria-hidden="true"><span class="bar" style="--mm:0"></span></span><span class="mm">0 mm</span></li>
+      </ol>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>One full session, every booking.</h2>
+      <p>No rushed cuts. Whatever you book, you get the same four steps with the same barber.</p>
+    </div>
+    <ol class="steps">
+      <li>
+        <h3>Consultation</h3>
+        <p>We look at your growth, your crown and how you style it at home before anything gets cut.</p>
+      </li>
+      <li>
+        <h3>Wash</h3>
+        <p>A quick wash so the cut is done on clean, natural-fall hair.</p>
+      </li>
+      <li>
+        <h3>Cut</h3>
+        <p>Clipper, scissor or razor, whatever the shape needs. No watching the clock.</p>
+      </li>
+      <li>
+        <h3>Finish</h3>
+        <p>Line-up, styling, and a quick lesson so you can get the same look on day three.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section rule" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Services and prices</h2>
+      <p>Prices in US dollars. Cash or card. Every service includes the full session.</p>
+    </div>
+    <div class="services-grid">
+      <ul class="price-list">
+        <li><span class="name">Classic cut</span><span class="desc">Scissor or clipper, styled to finish</span><span class="amount">$8</span></li>
+        <li><span class="name">Skin fade</span><span class="desc">Down to skin, blended, sharp line-up</span><span class="amount">$10</span></li>
+        <li><span class="name">Beard trim</span><span class="desc">Shape, line-up, hot towel finish</span><span class="amount">$5</span></li>
+        <li><span class="name">Hot towel shave</span><span class="desc">Straight razor, pre- and post-shave care</span><span class="amount">$7</span></li>
+        <li><span class="name">Cut and beard</span><span class="desc">Any cut plus a full beard trim</span><span class="amount">$12</span></li>
+        <li><span class="name">Kids cut</span><span class="desc">Ages 12 and under</span><span class="amount">$6</span></li>
+      </ul>
+      <aside class="services-aside on-blue">
+        <h3>Not sure what to book?</h3>
+        <p>Pick the closest service and tell us what you’re after in the notes. Your barber will talk it through with you before starting.</p>
+        <a href="#book" class="btn btn-yellow">Book a chair</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section rule" id="barbers">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The barbers</h2>
+      <p>Book the barber, not just the time. If they’re busy, we’ll offer their next free slot.</p>
+    </div>
+    <div class="barbers">
+      <article class="barber">
+        <div class="initials on-blue" aria-hidden="true">SD</div>
+        <h3>Sok Dara</h3>
+        <p class="role">Fades and modern cuts, 6 years</p>
+        <p>Trained in Phnom Penh. Known for tight fades and precise line-ups. Weekends book out first.</p>
+      </article>
+      <article class="barber">
+        <div class="initials on-blue" aria-hidden="true">CR</div>
+        <h3>Chan Ratha</h3>
+        <p class="role">Classic cuts and straight razor, 9 years</p>
+        <p>The shop’s longest-serving barber. Book with Ratha for a traditional cut and an unhurried hot towel shave.</p>
+      </article>
+      <article class="barber">
+        <div class="initials on-blue" aria-hidden="true">VB</div>
+        <h3>Vireak Bunthoeun</h3>
+        <p class="role">Beard sculpting and kids cuts, 4 years</p>
+        <p>Patient with first-time kids’ cuts, precise with beard shaping. Speaks Khmer, English and some French.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section on-ink" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Recent work</h2>
+      <p>Before and after, straight from the chair. Photos shown are placeholders for this concept.</p>
+    </div>
+    <div class="gallery">
+      <article class="pair">
+        <div class="pair-images">
+          <figure><img src="https://picsum.photos/seed/kroma-b1/400/500" width="400" height="500" alt="Before (placeholder photo)" loading="lazy"><figcaption>Before</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/kroma-a1/400/500" width="400" height="500" alt="After (placeholder photo)" loading="lazy"><figcaption>After</figcaption></figure>
+        </div>
+        <h3>Skin fade and line-up</h3>
+      </article>
+      <article class="pair">
+        <div class="pair-images">
+          <figure><img src="https://picsum.photos/seed/kroma-b2/400/500" width="400" height="500" alt="Before (placeholder photo)" loading="lazy"><figcaption>Before</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/kroma-a2/400/500" width="400" height="500" alt="After (placeholder photo)" loading="lazy"><figcaption>After</figcaption></figure>
+        </div>
+        <h3>Beard sculpt</h3>
+      </article>
+      <article class="pair">
+        <div class="pair-images">
+          <figure><img src="https://picsum.photos/seed/kroma-b3/400/500" width="400" height="500" alt="Before (placeholder photo)" loading="lazy"><figcaption>Before</figcaption></figure>
+          <figure><img src="https://picsum.photos/seed/kroma-a3/400/500" width="400" height="500" alt="After (placeholder photo)" loading="lazy"><figcaption>After</figcaption></figure>
+        </div>
+        <h3>Classic scissor cut</h3>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section on-blue" id="book">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Book a chair</h2>
+      <p>Send a request and we’ll confirm your barber and time on WhatsApp within a few hours.</p>
+    </div>
+    <div class="booking-grid">
+      <div>
+        <dl class="hours">
+          <div><dt>Tuesday to Saturday</dt><dd>9:00 to 19:00</dd></div>
+          <div><dt>Sunday</dt><dd>10:00 to 17:00</dd></div>
+          <div><dt>Monday</dt><dd>Closed</dd></div>
+        </dl>
+        <p class="booking-note">Walk-ins are welcome when a chair is free, but a booking guarantees your barber and your time.</p>
+      </div>
+
+      <form class="booking-form" id="bookingForm" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="booking" />
+        <p class="honeypot" aria-hidden="true">
+          <label>Leave this field blank <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <div class="field">
+          <label for="fname">Full name</label>
+          <input id="fname" name="name" type="text" autocomplete="name" required aria-describedby="fname-error">
+          <p class="error" id="fname-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="phone">WhatsApp number</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+855 …" required aria-describedby="phone-error">
+          <p class="error" id="phone-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="service">Service</label>
+          <select id="service" name="service">
+            <option value="Classic cut">Classic cut, $8</option>
+            <option value="Skin fade">Skin fade, $10</option>
+            <option value="Beard trim">Beard trim, $5</option>
+            <option value="Hot towel shave">Hot towel shave, $7</option>
+            <option value="Cut and beard">Cut and beard, $12</option>
+            <option value="Kids cut">Kids cut, $6</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="barber">Barber</label>
+          <select id="barber" name="barber">
+            <option>First available</option>
+            <option>Sok Dara</option>
+            <option>Chan Ratha</option>
+            <option>Vireak Bunthoeun</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" required aria-describedby="date-error">
+          <p class="error" id="date-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="time">Time</label>
+          <input id="time" name="time" type="time" min="09:00" max="19:00" step="900" required aria-describedby="time-error">
+          <p class="error" id="time-error" aria-live="polite"></p>
+        </div>
+        <div class="field full">
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" placeholder="Anything your barber should know…"></textarea>
+        </div>
+
+        <div class="full submit-row">
+          <button type="submit" class="btn btn-yellow" id="submitBtn">Send booking request</button>
+          <p>This is a request, not an instant booking.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="visit">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Find the shop</h2>
+      <p>On Ochheuteal Beach Road, a short walk from the beach.</p>
+    </div>
+    <div class="visit-grid">
+      <dl class="contact">
+        <div><dt>Address</dt><dd>Ochheuteal Beach Road, Sihanoukville, Cambodia</dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+85512345678">+855 12 345 678</a></dd></div>
+        <div><dt>WhatsApp</dt><dd><a href="https://wa.me/85512345678">Message us</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:hello@kromabarber.demo">hello@kromabarber.demo</a></dd></div>
+        <div><dt>Hours</dt><dd>Tue to Sat 9:00 to 19:00<br>Sun 10:00 to 17:00</dd></div>
+      </dl>
+      <div class="map">
+        <iframe
+          src="https://www.google.com/maps?q=Ochheuteal+Beach,Sihanoukville,Cambodia&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Map of Ochheuteal Beach, Sihanoukville"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer on-ink">
+  <div class="wrap footer-row">
+    <span class="brand">KROMA</span>
+    <span>© <span id="year">2026</span> KROMA Barber Co. Concept demo, Sihanoukville.</span>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/85512345678" target="_blank" rel="noopener">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.36 4 15c0 2.36.66 4.56 1.8 6.44L4 29l7.76-1.74A11.9 11.9 0 0 0 16.02 27C22.64 27 28 21.64 28 15S22.64 3 16.02 3zm0 21.6c-1.94 0-3.75-.55-5.28-1.5l-.38-.22-4.6 1.03 1.05-4.48-.25-.4A9.55 9.55 0 0 1 5.4 15c0-5.86 4.77-10.6 10.62-10.6S26.64 9.14 26.64 15 21.88 24.6 16.02 24.6zm5.53-7.86c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.07-.3-.15-1.28-.47-2.44-1.5-.9-.8-1.5-1.79-1.68-2.09-.18-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.68-1.63-.93-2.24-.24-.58-.49-.5-.68-.51h-.58c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35z"/></svg>
+  <span>WhatsApp us</span>
+</a>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu
+  const header = document.getElementById('siteHeader');
+  const toggle = header.querySelector('.menu-toggle');
+  const setMenu = (open) => {
+    header.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.addEventListener('click', () => setMenu(!header.classList.contains('open')));
+  header.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header.classList.contains('open')) { setMenu(false); toggle.focus(); }
+  });
+  matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
+
+  // Booking form: opening-hours validation with inline errors
+  const form = document.getElementById('bookingForm');
+  const dateEl = document.getElementById('date');
+  const timeEl = document.getElementById('time');
+  const pad = (n) => String(n).padStart(2, '0');
+  const today = new Date();
+  dateEl.min = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+
+  const showError = (el, msg) => {
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    document.getElementById(el.id + '-error').textContent = msg;
+  };
+
+  const validate = () => {
+    const errors = [];
+    const name = document.getElementById('fname');
+    const phone = document.getElementById('phone');
+
+    const nameMsg = name.value.trim() ? '' : 'Enter your name so your barber knows who to expect.';
+    showError(name, nameMsg); if (nameMsg) errors.push(name);
+
+    const digits = phone.value.replace(/\D/g, '');
+    const phoneMsg = digits.length >= 8 ? '' : 'Enter a WhatsApp number, including the country code.';
+    showError(phone, phoneMsg); if (phoneMsg) errors.push(phone);
+
+    let dateMsg = '';
+    let day = null;
+    if (!dateEl.value) dateMsg = 'Choose a date.';
+    else {
+      day = new Date(dateEl.value + 'T00:00').getDay();
+      if (dateEl.value < dateEl.min) dateMsg = 'Choose today or a later date.';
+      else if (day === 1) dateMsg = 'We’re closed on Mondays. Choose Tuesday to Sunday.';
+    }
+    showError(dateEl, dateMsg); if (dateMsg) errors.push(dateEl);
+
+    let timeMsg = '';
+    const [open, close] = day === 0 ? ['10:00', '17:00'] : ['09:00', '19:00'];
+    if (!timeEl.value) timeMsg = 'Choose a time.';
+    else if (timeEl.value < open || timeEl.value > close) timeMsg = `Choose a time between ${open} and ${close}${day === 0 ? ' on Sundays' : ''}.`;
+    showError(timeEl, timeMsg); if (timeMsg) errors.push(timeEl);
+
+    return errors;
+  };
+
+  form.addEventListener('submit', (e) => {
+    const errors = validate();
+    if (errors.length) {
+      e.preventDefault();
+      errors[0].focus();
+      return;
+    }
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending request…';
+  });
+</script>
+
+</body>
+</html>
